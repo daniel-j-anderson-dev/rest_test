@@ -1,0 +1,1 @@
+Tinkering with using REST APIs in preparation for KSU's [2024 Hackathon for Social Good ](https://www.kennesaw.edu/ccse/events/hackathon/index.php)
