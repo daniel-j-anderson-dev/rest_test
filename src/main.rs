@@ -17,7 +17,6 @@ async fn main() -> Result<(), Report> {
     return Ok(());
 }
 
-
 /// ths function makes a call to `https://random-d.uk/api/random` returning the url to the random duck image
 /// # Errors:
 /// - if the client fails to send the GET request
@@ -26,17 +25,17 @@ async fn main() -> Result<(), Report> {
 async fn random_duck_url(client: &Client) -> Result<Url, Report> {
     // make an api request
     let api_response = client // using the client
-        .get(API_URL) // call the api with GET
+        .get(API_URL) // setup the GET API request
         .send().await? // send the request and wait for a response
         .text().await? // get the text from the response. this could take awhile so lets wait for it
-        .parse::<JavaScriptObject>()?; // parse the text into a javascript object
+        .parse::<JavaScriptObject>()?; // parse the text into a json value
 
     // extract the image_url from the response
     let image_url = api_response["url"] // look for a "url" key
         .as_str() // get the corresponding value if there is one
         .ok_or_else(|| {
             eyre!(
-                "{} did not return a \"url\" key.\napi_response: {}",
+                "The response from {} did not contain a \"url\" key.\napi_response: {}",
                 API_URL,
                 api_response
             ) // if the value is not present set a corresponding error
