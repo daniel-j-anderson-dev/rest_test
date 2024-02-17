@@ -1,19 +1,22 @@
 use color_eyre::{eyre::eyre, Report};
 use reqwest::{Client, Url};
+<<<<<<< HEAD
 use serde_json::Value as JsonValue;
 
 /// this api will return a url of a picture of a duck
 const API_URL: &str = "https://random-d.uk/api/v2/random";
+=======
+>>>>>>> 7ae078022a125fb5ea988d903dd2edc05cd4cfcb
 
 #[tokio::main]
 async fn main() -> Result<(), Report> {
     // client is in charge of actually calling the api. and any other https request
     let client = Client::new();
-
+    
     let duck_image_url = random_duck_url(&client).await?;
-
+    
     println!("{}", duck_image_url);
-
+    
     return Ok(());
 }
 
@@ -23,12 +26,19 @@ async fn main() -> Result<(), Report> {
 /// - if the response is not able to be parsed into a [serde_json::Value]
 /// - if the `"url"` key is not present in the response, or it's value is not a valid [reqwest::Url]
 async fn random_duck_url(client: &Client) -> Result<Url, Report> {
+    /// this api will return a url of a picture of a duck
+    const API_URL: &str = "https://random-d.uk/api/v2/random";
+
     // make an api request
     let api_response = client // using the client
         .get(API_URL) // setup the GET API request
         .send().await? // send the request and wait for a response
         .text().await? // get the text from the response. this could take awhile so lets wait for it
+<<<<<<< HEAD
         .parse::<JsonValue>()?; // parse the text into a json value
+=======
+        .parse::<serde_json::Value>()?; // parse the text into a javascript object
+>>>>>>> 7ae078022a125fb5ea988d903dd2edc05cd4cfcb
 
     // extract the image_url from the response
     let image_url = api_response["url"] // look for a "url" key
@@ -44,3 +54,4 @@ async fn random_duck_url(client: &Client) -> Result<Url, Report> {
 
     return Ok(image_url);
 }
+
