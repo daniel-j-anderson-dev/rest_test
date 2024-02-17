@@ -1,6 +1,6 @@
 use color_eyre::{eyre::eyre, Report};
 use reqwest::{Client, Url};
-use serde_json::Value as JavaScriptObject;
+use serde_json::Value as JsonValue;
 
 /// this api will return a url of a picture of a duck
 const API_URL: &str = "https://random-d.uk/api/v2/random";
@@ -28,7 +28,7 @@ async fn random_duck_url(client: &Client) -> Result<Url, Report> {
         .get(API_URL) // setup the GET API request
         .send().await? // send the request and wait for a response
         .text().await? // get the text from the response. this could take awhile so lets wait for it
-        .parse::<JavaScriptObject>()?; // parse the text into a json value
+        .parse::<JsonValue>()?; // parse the text into a json value
 
     // extract the image_url from the response
     let image_url = api_response["url"] // look for a "url" key
