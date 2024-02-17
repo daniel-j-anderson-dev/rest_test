@@ -30,7 +30,7 @@ async fn random_duck_url(client: &Client) -> Result<Url, Report> {
     let api_response = client // using the client
         .get(API_URL) // setup the GET API request
         .send().await? // send the request and wait for a response
-        .text().await? // get the text from the response. this could take awhile so lets wait for it
+        .text().await? // extract the text from the response. this could take awhile so lets wait for it
         .parse::<JsonValue>()?; // parse the text into a json value
 
     // extract the image_url from the response
